@@ -1,7 +1,7 @@
 from modules.user_management_modules import *
 
-print("project user check up v1.0")
-print("practice")
+print("project user management(check up)")
+print("v0.3")
 print(80 * "-")
 
 # the menu
