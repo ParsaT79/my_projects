@@ -1,12 +1,16 @@
-from tools.validator_tools import *
+from practice_b_1.tools.validator_tools import *
+from functools import reduce
 
 user_list = []
 
 # the menu
 def user_choice_menu():
-    print("1) Add User(username, password, nickname, status)")
+    print("1) Add user(username, password, nickname, status)")
     print("2) Check user's login")
     print("3) Show users")
+    print("4) Show active students")
+    print("5) Sort students by username")
+    print("6) Count active students")
     print("0) Exit")
     option = input("Enter your choice : ")
     return option
@@ -56,12 +60,35 @@ def check_user_login():
             print("User not found!")
 
 # show users
-def show_users():
-    for user in user_list:
+def show_users(users=None):
+    if users is None:
+        users = user_list
+    for user in users:
         print(f"Username : {user['Username']:12} "
               f"Nickname : {user['Nickname']:12} "
               f"password : {'*' * len(user['Password']):12} "
               f"User status : {bool(user['Status'])}"
               )
+
+# sort students by username
+def sort_key_username(student):
+    return student["Username"]
+def sort_by_username():
+    result = sorted(user_list, key=sort_key_username)
+    show_users(result)
+
+# show active users
+def is_active(student):
+    return student["Status"]
+def active_users():
+    result = list(filter(is_active, user_list))
+    show_users(result)
+
+# count active students
+def active_counter(count, user):
+    return count + user["Status"]
+def count_active_users():
+    total = reduce(active_counter, user_list, 0)
+    print(f"\nTotal active users : {total}")
 
 # ----------------------------- MAIN MODULES -----------------------------
